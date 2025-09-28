@@ -45,7 +45,7 @@
             {% if grafico_url %}
                 <img id="grafico-img" src="{{ url_for('static', filename='images/conjugado_vs_escorregamento.png') }}?v={{ range(1, 1000) | random }}" alt="Gráfico de Conjugado vs Escorregamento">
             {% else %}
-                <p>O gráfico da Opção A será exibido aqui após a análise.</p>
+                <p class="placeholder-text">O gráfico da Opção A será exibido aqui após a análise.</p>
             {% endif %}
         </div>
 
@@ -91,8 +91,9 @@
                 <a href="{{ url_for('download_file', filename=download_file) }}" class="download-button">Baixar Excel com detalhes</a>
             </div>
         {% else %}
-            <p>As opções serão exibidas aqui.</p>
+            <p class="placeholder-text">As opções serão exibidas aqui.</p>
         {% endif %}
         <p class="info-footer">Motores dimensionados considerando altitude ≤ 1000 m, temperatura ambiente ≤ 40 °C e valor médio do kWh R$ 0,67.</p>
     </div>
+
 {% endblock %}
