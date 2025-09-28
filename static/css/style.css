@@ -282,6 +282,18 @@ header nav a {
     text-decoration: none;
     border-radius: 5px;
 }
+
+.placeholder-text {
+    flex-grow: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #808c99;
+    font-size: 0.9em;
+    padding: 20px;
+}
+
 @media screen and (max-width: 768px) {
 
     header {
@@ -306,14 +318,4 @@ header nav a {
     body {
         padding: 10px;
     }
-}
-.placeholder-text {
-    flex-grow: 1; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #808c99;
-    font-size: 0.9em;
-    padding: 20px;
 }
