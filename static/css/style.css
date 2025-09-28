@@ -282,3 +282,28 @@ header nav a {
     text-decoration: none;
     border-radius: 5px;
 }
+@media screen and (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    header nav {
+        margin-left: 0;
+    }
+    .container {
+        flex-direction: column;
+    }
+    .criterios,
+    .coluna-central,
+    .resultados {
+        flex-basis: 100%;
+    }
+    h1 {
+        font-size: 1.1em;
+    }
+    body {
+        padding: 10px;
+    }
+}
