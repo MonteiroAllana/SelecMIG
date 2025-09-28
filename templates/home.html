@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}SelecMIG - Home{% endblock %}
+
+{% block content %}
+    <div class="card criterios">
+        <h2>DEFINA OS CRITÉRIOS</h2>
+        <form action="/" method="post">
+            <label for="porte">Qual o porte do seu acionamento?</label>
+            <select name="porte" id="porte" required>
+                <option value="" disabled selected>Escolha...</option>
+                <option value="muito_leve">Muito leve (até 1,5 cv)</option>
+                <option value="leve">Leve (2 a 5 cv)</option>
+                <option value="intermediario">Intermediário (6 a 15 cv)</option>
+                <option value="pesado">Pesado (20 a 50 cv)</option>
+                <option value="muito_pesado">Muito pesado (60 a 100 cv)</option>
+                <option value="extremamente_pesado">Extremamente pesado (> 100 cv)</option>
+            </select>
+
+            <label for="partida">Sua carga exige muito esforço para iniciar o movimento?</label>
+            <select name="partida" id="partida" required>
+                <option value="" disabled selected>Escolha...</option>
+                <option value="baixo">Baixo (Partida leve)</option>
+                <option value="medio">Médio (Esforço moderado)</option>
+                <option value="alto">Alto (Partida pesada)</option>
+            </select>
+
+            <label for="operacao">A operação será:</label>
+            <select name="operacao" id="operacao" required>
+                <option value="" disabled selected>Escolha...</option>
+                <option value="continua">Contínua, por longos períodos</option>
+                <option value="intermitente">Intermitente, liga e desliga com frequência</option>
+            </select>
+
+            <label for="horas_dia">Quantas horas por dia em média o motor ficará ligado?</label>
+            <input type="number" name="horas_dia" id="horas_dia" placeholder="Digite..." required min="0" step="0.1">
+
+            <button type="submit">Analisar</button>
+        </form>
+    </div>
+
+    <div class="coluna-central">
+        <div class="card grafico">
+            <h2>GRÁFICO</h2>
+            {% if grafico_url %}
+                <img id="grafico-img" src="{{ url_for('static', filename='images/conjugado_vs_escorregamento.png') }}?v={{ range(1, 1000) | random }}" alt="Gráfico de Conjugado vs Escorregamento">
+            {% else %}
+                <p>O gráfico da Opção A será exibido aqui após a análise.</p>
+            {% endif %}
+        </div>
+
+        {% if texto_regime %}
+        <div class="card regime">
+            <h2>REGIME DE SERVIÇO</h2>
+            <div class="regime-descricao">
+                {{ texto_regime | safe }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="card resultados">
+        <h2>RESULTADOS</h2>
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% elif resultados %}
+            <div class="opcao">
+                <h3>OPÇÃO A - MELHOR EFICIÊNCIA (IP55)</h3>
+                <p><strong>Potência:</strong> {{ "%.2f"|format(resultados.A['Potência [kW]']) }} kW ({{ resultados.A['Potência [cv]'] }} cv)</p>
+                <p><strong>Eficiência (100% Pn):</strong> {{ "%.2f"|format(resultados.A['η 100% Pn']) }}%</p>
+                <p><strong>Custo diário (estimado):</strong> R$ {{ "%.2f"|format(resultados.A['Custo_Diario']) }}</p>
+            </div>
+
+            <div class="opcao">
+                <h3>OPÇÃO B - MENOR CUSTO (IP55)</h3>
+                <p><strong>Potência:</strong> {{ "%.2f"|format(resultados.B['Potência [kW]']) }} kW ({{ resultados.B['Potência [cv]'] }} cv)</p>
+                <p><strong>Eficiência (100% Pn):</strong> {{ "%.2f"|format(resultados.B['η 100% Pn']) }}%</p>
+                <p><strong>Custo diário (estimado):</strong> R$ {{ "%.2f"|format(resultados.B['Custo_Diario']) }}</p>
+            </div>
+
+            {% if resultados.C %}
+            <div class="opcao">
+                <h3>OPÇÃO C - BALANCEADA (IP55)</h3>
+                <p><strong>Potência:</strong> {{ "%.2f"|format(resultados.C['Potência [kW]']) }} kW ({{ resultados.C['Potência [cv]'] }} cv)</p>
+                <p><strong>Eficiência (100% Pn):</strong> {{ "%.2f"|format(resultados.C['η 100% Pn']) }}%</p>
+                <p><strong>Custo diário (estimado):</strong> R$ {{ "%.2f"|format(resultados.C['Custo_Diario']) }}</p>
+            </div>
+            {% endif %}
+
+            <div class="download-section">
+                <a href="{{ url_for('download_file', filename=download_file) }}" class="download-button">Baixar Excel com detalhes</a>
+            </div>
+        {% else %}
+            <p>As opções serão exibidas aqui.</p>
+        {% endif %}
+        <p class="info-footer">Motores dimensionados considerando altitude ≤ 1000 m, temperatura ambiente ≤ 40 °C e valor médio do kWh R$ 0,67.</p>
+    </div>
+{% endblock %}
