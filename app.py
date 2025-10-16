@@ -48,7 +48,7 @@ TEXTOS_REGIMES = {
         <p>Esse regime exige motores projetados para esforços severos, comuns em britadores e ventiladores de túnel.</p>
     """,
     'INDEFINIDO': """
-        <h3>Regime de Serviço Não Encontrado</h3>
+        <h3>Regime de Serviço não encontrado</h3>
         <p>Com base na combinação de critérios selecionada, não foi possível identificar um regime de serviço padrão correspondente.</p>
         <p>A seleção do motor ainda é válida com base nos critérios de potência e torque, mas a análise do regime de operação pode exigir uma avaliação mais detalhada da sua aplicação.</p>
     """
@@ -207,4 +207,5 @@ def mais_informacoes():
     return render_template('mais_informacoes.html')
 
 if __name__ == '__main__':
+
     app.run(debug=True)
